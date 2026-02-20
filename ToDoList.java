@@ -1,10 +1,17 @@
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
 public class ToDoList {
+    private static final String FILE_NAME = "tasks.txt";
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         ArrayList<Task> tasks = new ArrayList<>();
+
+        // ⭐ 起動時にファイルから読み込む
+        loadTasks(tasks);
 
         while (true) {
             System.out.println("=== ToDo メニュー ===");
@@ -17,10 +24,11 @@ public class ToDoList {
             System.out.print("番号を選んでください: ");
 
             int choice = scanner.nextInt();
-            scanner.nextLine(); // 改行を消す
+            scanner.nextLine(); 
 
             if (choice == 3) {
                 System.out.println("終了します！");
+                saveTasks(tasks); // 終了前に保存
                 break;
             }
 
@@ -122,6 +130,48 @@ public class ToDoList {
             else {
                 System.out.println("1～6 の番号を入力してください！");
             }
+        }
+    }
+
+    // ---------------------------------------
+    // ⭐ ファイル読み込みメソッド
+    // ---------------------------------------
+    private static void loadTasks(ArrayList<Task> tasks) {
+        File file = new File(FILE_NAME);
+
+        if (!file.exists()) {
+            return; // ファイルがないなら何もしない
+        }
+
+        try (Scanner fileScanner = new Scanner(file, "UTF-8")) {
+            while (fileScanner.hasNextLine()) {
+                String line = fileScanner.nextLine();
+                String[] parts = line.split("\t"); // タブ区切り
+
+                if (parts.length == 2) {
+                    Task t = new Task(parts[1]);
+                    t.isDone = parts[0].equals("1"); // 1 = 完了
+                    tasks.add(t);
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("読み込み中にエラーが発生しました: " + e.getMessage());
+        }
+    }
+
+    // ---------------------------------------
+    // ⭐ ファイル保存メソッド
+    // ---------------------------------------
+    private static void saveTasks(ArrayList<Task> tasks) {
+        try (FileWriter writer = new FileWriter(FILE_NAME, false)) {
+
+            for (Task t : tasks) {
+                String doneFlag = t.isDone ? "1" : "0"; // 1=完了, 0=未完了
+                writer.write(doneFlag + "\t" + t.title + "\n");
+            }
+
+        } catch (IOException e) {
+            System.out.println("保存中にエラーが発生しました: " + e.getMessage());
         }
     }
 }
