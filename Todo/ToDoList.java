@@ -47,9 +47,12 @@ public class ToDoList {
                     System.out.print("期限を入力 (例: 2024-03-01 / 無しなら Enter): ");
                     String due = scanner.nextLine();
                     if (due.isEmpty()) due = "-";
-
+                        System.out.print("カテゴリを入力 (例: 勉強 / 買い物 / 仕事): ");
+                        String category = scanner.nextLine();
+                        if (category.isEmpty()) category = "未分類";
+                        
                     // 新しいタスクを作成しリストへ追加
-                    tasks.add(new Task(title, false, priority, due));
+                    tasks.add(new Task(title, false, priority, due, category));
 
                     System.out.println("タスクを追加しました！");
                     break;
