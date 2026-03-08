@@ -50,7 +50,7 @@ public class ToDoList {
                         System.out.print("カテゴリを入力 (例: 勉強 / 買い物 / 仕事): ");
                         String category = scanner.nextLine();
                         if (category.isEmpty()) category = "未分類";
-                        
+
                     // 新しいタスクを作成しリストへ追加
                     tasks.add(new Task(title, false, priority, due, category));
 
@@ -196,7 +196,9 @@ public class ToDoList {
         // ファイルがないときは読み込まない
         if (!file.exists()) return;
 
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+        try (BufferedReader br = new BufferedReader(
+            new InputStreamReader(
+                    new FileInputStream(file), "UTF-8"))) {
 
             String line;
             while ((line = br.readLine()) != null) {
@@ -215,7 +217,9 @@ public class ToDoList {
     // ----------------------------
     private static void saveTasks(ArrayList<Task> tasks) {
 
-        try (PrintWriter pw = new PrintWriter(new FileWriter(FILE_NAME))) {
+        try (PrintWriter pw = new PrintWriter(
+        new OutputStreamWriter(
+                new FileOutputStream(FILE_NAME), "UTF-8"))) {
 
             for (Task t : tasks) {
                 // 1行の文字列に変換して保存
