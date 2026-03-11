@@ -28,6 +28,7 @@ public class ToDoList {
             System.out.println("5. タスクを編集");
             System.out.println("6. 完了チェックの切り替え");
             System.out.println("7. 優先度順に並び替え");
+            System.out.println("8. サブタスク追加");
 
             System.out.print("番号を選んでください: ");
             int choice = scanner.nextInt();   // メニュー番号を入力
@@ -154,8 +155,32 @@ public class ToDoList {
                     System.out.println("優先度順に並び替えました！（高 → 低）");
                     break;
 
+                // 8. サブタスク追加
+                case 8:
+
+                    showTasks(tasks);
+
+                    System.out.print("親タスク番号: ");
+                    int parent = scanner.nextInt();
+                    scanner.nextLine();
+
+                    if (!isValidIndex(parent, tasks)) {
+                        System.out.println("番号が正しくありません");
+                        break;
+                    }
+
+                    System.out.print("サブタスク名: ");
+                    String subTitle = scanner.nextLine();
+
+                    Task sub = new Task(subTitle);
+
+                    tasks.get(parent - 1).addSubTask(sub);
+
+                    System.out.println("サブタスク追加！");
+                    break;
+
                 default:
-                    System.out.println("1〜7 を選んでください！");
+                    System.out.println("1〜8 を選んでください！");
             }
         }
     }

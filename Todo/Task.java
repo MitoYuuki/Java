@@ -1,5 +1,7 @@
 package Todo;
 
+import java.util.ArrayList;
+
 public class Task {
 
     // タスク名
@@ -17,6 +19,9 @@ public class Task {
     // カテゴリ（勉強・買い物など）
     String category;
 
+    // サブタスク
+    ArrayList<Task> subTasks;
+
     // 通常タスク（優先度は中、期限なし）
     public Task(String title) {
         this.title = title;
@@ -24,6 +29,7 @@ public class Task {
         this.priority = 2; // 中
         this.dueDate = "-";
         this.category = "未分類";
+        this.subTasks = new ArrayList<>();
     }
 
     // 優先度つきコンストラクタ
@@ -33,6 +39,7 @@ public class Task {
         this.priority = priority;
         this.dueDate = "-";
         this.category = "未分類";
+        this.subTasks = new ArrayList<>();
     }
 
     // ファイル読み込み時用コンストラクタ
@@ -42,6 +49,7 @@ public class Task {
         this.priority = priority;
         this.dueDate = dueDate;
         this.category = category;
+        this.subTasks = new ArrayList<>();
     }
 
     // 完了状態を反転させる
@@ -61,7 +69,7 @@ public class Task {
 
     // タスクを画面表示用の文字にする
     public String display() {
-        return String.format(
+        String text = String.format(
                 "%s %s (カテゴリ:%s, 優先度:%s, 期限:%s)",
                 (isDone ? "[✓]" : "[ ]"),
                 title,
@@ -69,12 +77,24 @@ public class Task {
                 priorityLabel(),
                 dueDate != null ? dueDate : "なし"
         );
+
+        // タスクの中にサブタスク追加
+        for (Task sub : subTasks) {
+            text += "\n   └ " + sub.display();
+        }
+
+        return text;
     }
 
     // タスクをファイル保存用の1行に変換
     public String toData() {
         // 例：1,買い物,2,2024-02-28
         return (isDone ? "1" : "0") + "," + title + "," + priority + "," + dueDate + "," + category;
+    }
+
+    // サブタスク追加
+    public void addSubTask(Task subTask) {
+        subTasks.add(subTask);
     }
 
     // 保存された1行から Task に戻す
