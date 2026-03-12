@@ -96,6 +96,17 @@ public class Library {
         }
     }
 
+    // 本を削除するメソッド
+    public void deleteBook(int index) {
+
+        if (!isValidIndex(index)) return;
+
+        //指定した本を削除
+        Book removed = books.remove(index);
+
+        System.out.println("削除しました: " + removed.display());
+    }
+
 
     // インデックスが正しいかチェック
     private boolean isValidIndex(int index) {

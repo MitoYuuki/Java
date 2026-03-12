@@ -22,7 +22,8 @@ public class LibraryApp {
             System.out.println("3 本を借りる");
             System.out.println("4 本を返す");
             System.out.println("5 本を検索");
-            System.out.println("6 終了");
+            System.out.println("6 本削除");
+            System.out.println("7 終了");
 
             System.out.print("選択: ");
 
@@ -83,9 +84,19 @@ public class LibraryApp {
                     library.searchBook(keyword);
                     break;
 
-
-                // 終了
+                //削除
                 case 6:
+
+                    library.showBooks();
+
+                    System.out.print("削除する本番号: ");
+                    int del = scanner.nextInt() - 1;
+
+                    library.deleteBook(del);
+
+                    break;
+
+                case 7:
 
                     System.out.println("終了します");
                     return;
