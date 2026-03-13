@@ -45,4 +45,9 @@ public class Book {
         // 貸出中なら [貸出中] を表示
         return title + " - " + author + (borrowed ? " [貸出中]" : "");
     }
+
+    // 著者を取得するgetter
+    public String getAuthor() {
+        return author;
+    }
 }

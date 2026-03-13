@@ -1,6 +1,7 @@
 package Library;
 
 import java.util.ArrayList;
+import java.io.*;
 
 // 図書館クラス（本を管理する）
 public class Library {
@@ -105,6 +106,69 @@ public class Library {
         Book removed = books.remove(index);
 
         System.out.println("削除しました: " + removed.display());
+    }
+
+    // ファイルから本のデータを読み込むメソッド
+    public void loadBooks() {
+
+        // 処理が終わったら自動でファイルを閉じる
+        try (BufferedReader br = new BufferedReader(new FileReader("books.txt"))) {
+
+            String line;
+
+            // 1行ずつ読み込む
+            while ((line = br.readLine()) != null) {
+
+                // 例: Java入門,山田,false
+                // カンマで分割
+                String[] data = line.split(",");
+
+                // 配列からデータを取得
+                String title = data[0];
+                String author = data[1];
+                boolean borrowed = Boolean.parseBoolean(data[2]);
+
+                // 本オブジェクトを作成
+                Book book = new Book(title, author);
+
+                // 貸出状態がtrueならborrow()を呼ぶ
+                if (borrowed) {
+                    book.borrow();
+                }
+
+                // 本リスト(ArrayList)に追加
+                books.add(book);
+            }
+
+        } catch (IOException e) {
+
+            // ファイルがまだ存在しない場合
+            System.out.println("保存ファイルがありません");
+        }
+    }
+
+    // 本リストをファイルに保存するメソッド
+    public void saveBooks() {
+
+        // PrintWriterでファイルに書き込み
+        try (PrintWriter pw = new PrintWriter(new FileWriter("books.txt"))) {
+
+            // booksリストを1冊ずつ処理
+            for (Book b : books) {
+
+                // CSV形式で保存
+                pw.println(
+                    b.getTitle() + "," +
+                    b.getAuthor() + "," +
+                    b.isBorrowed()
+                );
+            }
+
+        } catch (IOException e) {
+
+            // 保存時エラー
+            System.out.println("保存エラー");
+        }
     }
 
 

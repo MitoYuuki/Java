@@ -98,6 +98,9 @@ public class LibraryApp {
 
                 case 7:
 
+                    // 終了前にデータ保存
+                    library.saveBooks();
+
                     System.out.println("終了します");
                     return;
 
