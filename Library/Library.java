@@ -11,10 +11,10 @@ public class Library {
 
 
     // 本を追加するメソッド
-    public void addBook(String title, String author) {
+    public void addBook(String title, String author, String category) {
 
         // 新しいBookオブジェクトを作ってリストに追加
-        books.add(new Book(title, author));
+        books.add(new Book(title, author, category));
     }
 
 
@@ -119,17 +119,18 @@ public class Library {
             // 1行ずつ読み込む
             while ((line = br.readLine()) != null) {
 
-                // 例: Java入門,山田,false
+                // 例: Java入門,山田,技術,false
                 // カンマで分割
                 String[] data = line.split(",");
 
                 // 配列からデータを取得
                 String title = data[0];
                 String author = data[1];
-                boolean borrowed = Boolean.parseBoolean(data[2]);
+                String category = data[2];
+                boolean borrowed = Boolean.parseBoolean(data[3]);
 
                 // 本オブジェクトを作成
-                Book book = new Book(title, author);
+                Book book = new Book(title, author, category);
 
                 // 貸出状態がtrueならborrow()を呼ぶ
                 if (borrowed) {
@@ -160,6 +161,7 @@ public class Library {
                 pw.println(
                     b.getTitle() + "," +
                     b.getAuthor() + "," +
+                    b.getCategory() + "," +
                     b.isBorrowed()
                 );
             }

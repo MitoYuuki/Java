@@ -13,6 +13,9 @@ public class LibraryApp {
         // 図書館オブジェクト
         Library library = new Library();
 
+        // 起動時にファイル読み込み
+        library.loadBooks();
+
         // 無限ループ（メニューを繰り返す）
         while (true) {
 
@@ -41,7 +44,12 @@ public class LibraryApp {
                     System.out.print("著者: ");
                     String author = scanner.nextLine();
 
-                    library.addBook(title, author);
+                    // カテゴリ入力
+                    System.out.print("カテゴリ: ");
+                    String category = scanner.nextLine();
+
+                    // 本を追加
+                    library.addBook(title, author, category);
                     break;
 
 
@@ -106,7 +114,7 @@ public class LibraryApp {
 
 
                 default:
-                    System.out.println("1〜6を選んでください");
+                    System.out.println("1〜7を選んでください");
             }
         }
     }

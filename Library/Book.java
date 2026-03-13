@@ -12,10 +12,15 @@ public class Book {
     // 貸出状態（trueなら貸出中）
     private boolean borrowed;
 
+    // 本のカテゴリ（例: 技術 / 小説 / ビジネス）
+    private String category;
+
     // コンストラクタ（本を作るときにタイトルと著者を設定）
-    public Book(String title, String author) {
+    public Book(String title, String author, String category) {
         this.title = title;
         this.author = author;
+        // 本のカテゴリ
+        this.category = category;
         this.borrowed = false; // 最初は貸出されていない
     }
 
@@ -43,11 +48,17 @@ public class Book {
     public String display() {
 
         // 貸出中なら [貸出中] を表示
-        return title + " - " + author + (borrowed ? " [貸出中]" : "");
+        return title + " - " + author +
+           " (" + category + ")" + (borrowed ? " [貸出中]" : "");
     }
 
     // 著者を取得するgetter
     public String getAuthor() {
         return author;
+    }
+
+    // カテゴリを取得するgetter
+    public String getCategory() {
+        return category;
     }
 }
