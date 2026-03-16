@@ -85,7 +85,9 @@ public class Library {
         for (Book b : books) {
 
             // タイトルにキーワードが含まれているか
-            if (b.getTitle().contains(keyword)) {
+            if (b.getTitle().contains(keyword) ||
+                b.getAuthor().contains(keyword) ||
+                b.getCategory().contains(keyword)) {
 
                 System.out.println(b.display());
                 found = true;
